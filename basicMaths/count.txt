@@ -1,0 +1,2 @@
+Time complexity = O(log10(n))
+as in loop n is being divided by 10 repetedly
