@@ -1,0 +1,25 @@
+
+
+#include<bits\stdc++.h>
+using namespace std;
+
+int funcn(int arr[],int size){
+
+}
+
+int main(void){
+    int test;
+    cin>>test;
+    while(test>0){
+        int size;
+        cin>>size;
+        int* arr = new int[size];
+        for(int i = 0; i<size;i++){
+            cin>>arr[i];
+        }
+        funcn(arr,size);
+
+        delete[] arr;
+        test--;
+    }
+}
