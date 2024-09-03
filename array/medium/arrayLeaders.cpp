@@ -4,13 +4,37 @@ using namespace std;
 
 
 /*
-
 intution: 
 
 let  nums = [16,17,4,3,5,2]
 
+for i = 5
+    nums[5] > INT_MIN => max = 2
+    => ans = [2]
+
+for i = 4
+    nums[4]> 2 => max = 5
+    => ans = [2,5]
+
+for i = 3
+    nums[3] < 5
+    => ans = [2,5]
+
+for i = 2
+    nums[2] < 5 
+    => ans = [2,5]
+
+for i = 1
+    nums[1] > 5 => max = 17
+    => ans = [2,5,17]
+
 for i = 0
-    
+    nums[0] < 17
+    => ans [ 2,5,17]
+
+loop end;
+
+reverse the array ans and return it
  */
 
 // time complexity: O(n)
