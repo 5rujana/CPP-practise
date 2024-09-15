@@ -1,5 +1,10 @@
-// this is breadth first search
-// problem statement : https://leetcode.com/problems/binary-tree-level-order-traversal/
+// problem statement: https://leetcode.com/problems/diameter-of-binary-tree/description/
+/*
+
+What is diametr of tree?
+    The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root
+
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -21,28 +26,20 @@ class TreeNode{
     }
 };
 
-
 class Solution{
     public:
-    vector<vector<int>> levelOrder(TreeNode * root){
-        vector<vector<int>> ans;
-        if(root == NULL) return ans;
-        queue<TreeNode *> q;
-        q.push(root);
-        while(!q.empty()){
-            int size = q.size();
-            vector<int> level;
-            for(int i = 0; i<size;i++){
-                TreeNode * node = q.front();
-                q.pop();
-                if(node-> left !=NULL) q.push(node-> left);
-                if(node->right != NULL) q.push(node->right);
-                level.push_back(node->data);
-            }
-            ans.push_back(level);
+        int height(TreeNode * root, int &diameter){
+            if(root == NULL) return 0;
+            int lh = height(root->left,diameter);
+            int rh = height(root-> right,diameter);
+            diameter = max(diameter,lh+rh);
+            return 1+max(lh,rh);
         }
-        return ans;
-    }
+        int findDiameter(TreeNode * root){
+            int diameter = 0;
+            height(root,diameter);
+            return diameter;
+        }
 };
 
 int main(){
@@ -62,11 +59,7 @@ int main(){
     root-> right->left->right = new TreeNode(21);   
     root-> right-> right->left = new TreeNode(22);
     root-> right-> right->left = new TreeNode(23);
-    vector<vector<int>> level = sl.levelOrder(root);
-    for(int i = 0; i< level.size();i++){
-        for(int j = 0; j < level[i].size(); j++){
-            cout<< level[i][j] << " ";
-        }
-        cout<<endl;
-    }
-    return 0;}
+    int diameter = sl.findDiameter(root);
+    cout<< diameter << endl;
+    return 0;
+}

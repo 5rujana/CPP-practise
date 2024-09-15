@@ -1,6 +1,4 @@
-// this is breadth first search
-// problem statement : https://leetcode.com/problems/binary-tree-level-order-traversal/
-
+//problem statement: https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/submissions/1388001013/
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -21,29 +19,33 @@ class TreeNode{
     }
 };
 
-
 class Solution{
     public:
-    vector<vector<int>> levelOrder(TreeNode * root){
+    vector<vector<int>> zigzagOrder(TreeNode * root){
         vector<vector<int>> ans;
         if(root == NULL) return ans;
         queue<TreeNode *> q;
         q.push(root);
+        bool leftToRight = true;
         while(!q.empty()){
             int size = q.size();
-            vector<int> level;
-            for(int i = 0; i<size;i++){
+            vector<int> level(size);
+
+            for(int i = 0; i< size;i++){
                 TreeNode * node = q.front();
                 q.pop();
-                if(node-> left !=NULL) q.push(node-> left);
-                if(node->right != NULL) q.push(node->right);
-                level.push_back(node->data);
+                int index = leftToRight? i : (size-1-i);
+                level[index] = node->data;
+                if(node-> left!=NULL) q.push(node->left);
+                if(node-> right != NULL) q.push(node-> right);
             }
             ans.push_back(level);
+            leftToRight = !leftToRight;
         }
         return ans;
     }
 };
+
 
 int main(){
     Solution sl;
@@ -62,10 +64,10 @@ int main(){
     root-> right->left->right = new TreeNode(21);   
     root-> right-> right->left = new TreeNode(22);
     root-> right-> right->left = new TreeNode(23);
-    vector<vector<int>> level = sl.levelOrder(root);
-    for(int i = 0; i< level.size();i++){
-        for(int j = 0; j < level[i].size(); j++){
-            cout<< level[i][j] << " ";
+    vector<vector<int>> zigzag = sl.zigzagOrder(root);
+    for(int i = 0; i< zigzag.size();i++){
+        for(int j = 0; j < zigzag[i].size(); j++){
+            cout<< zigzag[i][j] << " ";
         }
         cout<<endl;
     }

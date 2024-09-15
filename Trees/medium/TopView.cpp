@@ -1,6 +1,4 @@
-// this is breadth first search
-// problem statement : https://leetcode.com/problems/binary-tree-level-order-traversal/
-
+// problem statement:https://www.geeksforgeeks.org/problems/top-view-of-binary-tree/1
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -21,29 +19,31 @@ class TreeNode{
     }
 };
 
-
 class Solution{
     public:
-    vector<vector<int>> levelOrder(TreeNode * root){
-        vector<vector<int>> ans;
-        if(root == NULL) return ans;
-        queue<TreeNode *> q;
-        q.push(root);
-        while(!q.empty()){
-            int size = q.size();
-            vector<int> level;
-            for(int i = 0; i<size;i++){
-                TreeNode * node = q.front();
+        vector<int> TopView(TreeNode * root){
+            vector<int> ans;
+            if(root == NULL) return ans;
+            map<int,int> mpp;
+            queue<pair<TreeNode*,int>> q;
+            q.push({root,0});
+            while(!q.empty()){
+                auto it = q.front();
                 q.pop();
-                if(node-> left !=NULL) q.push(node-> left);
-                if(node->right != NULL) q.push(node->right);
-                level.push_back(node->data);
+                TreeNode * temp = it.first;
+                int line = it.second;
+                if(mpp.find(line)==mpp.end()) mpp[line] = temp->data;
+                if(temp -> left) q.push({temp-> left, line-1});
+                if(temp->right) q.push({temp->right, line+1}); 
             }
-            ans.push_back(level);
+            for(auto it: mpp){
+                ans.push_back(it.second);
+            }
+            return ans;
         }
-        return ans;
-    }
+
 };
+
 
 int main(){
     Solution sl;
@@ -61,12 +61,12 @@ int main(){
     root-> right->left->left = new TreeNode(20);
     root-> right->left->right = new TreeNode(21);   
     root-> right-> right->left = new TreeNode(22);
-    root-> right-> right->left = new TreeNode(23);
-    vector<vector<int>> level = sl.levelOrder(root);
-    for(int i = 0; i< level.size();i++){
-        for(int j = 0; j < level[i].size(); j++){
-            cout<< level[i][j] << " ";
+    root-> right-> right->right = new TreeNode(23);
+    vector<int> top= sl.TopView(root);
+    for(int i = 0; i< top.size();i++){
+            cout<< top[i] << " ";
         }
-        cout<<endl;
-    }
-    return 0;}
+            cout<<endl;
+
+    return 0;
+}

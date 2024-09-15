@@ -1,8 +1,11 @@
-// this is breadth first search
-// problem statement : https://leetcode.com/problems/binary-tree-level-order-traversal/
-
+// problem statement: https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
 #include<bits/stdc++.h>
 using namespace std;
+
+/*
+intutuion: 
+we'll implement level order traversal using queue and increment cntr
+*/ 
 
 class TreeNode{
     public:
@@ -24,24 +27,11 @@ class TreeNode{
 
 class Solution{
     public:
-    vector<vector<int>> levelOrder(TreeNode * root){
-        vector<vector<int>> ans;
-        if(root == NULL) return ans;
-        queue<TreeNode *> q;
-        q.push(root);
-        while(!q.empty()){
-            int size = q.size();
-            vector<int> level;
-            for(int i = 0; i<size;i++){
-                TreeNode * node = q.front();
-                q.pop();
-                if(node-> left !=NULL) q.push(node-> left);
-                if(node->right != NULL) q.push(node->right);
-                level.push_back(node->data);
-            }
-            ans.push_back(level);
-        }
-        return ans;
+    int height(TreeNode * root){
+        if(root == NULL) return 0;
+        int lh = height(root->left); // finding max depth of left subtree
+        int rh = height(root->right); // finding max depth of right subtree
+        return 1+max(lh,rh);
     }
 };
 
@@ -62,11 +52,7 @@ int main(){
     root-> right->left->right = new TreeNode(21);   
     root-> right-> right->left = new TreeNode(22);
     root-> right-> right->left = new TreeNode(23);
-    vector<vector<int>> level = sl.levelOrder(root);
-    for(int i = 0; i< level.size();i++){
-        for(int j = 0; j < level[i].size(); j++){
-            cout<< level[i][j] << " ";
-        }
-        cout<<endl;
-    }
-    return 0;}
+    int height = sl.height(root);
+    cout<<height << endl;
+    return 0;
+}

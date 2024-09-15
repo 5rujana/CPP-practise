@@ -1,6 +1,3 @@
-// this is breadth first search
-// problem statement : https://leetcode.com/problems/binary-tree-level-order-traversal/
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -8,7 +5,7 @@ class TreeNode{
     public:
     int data;
     TreeNode * left;
-    TreeNode * right;
+    TreeNode *   right;
     TreeNode(){
         data = 0;
         left = NULL;
@@ -21,27 +18,21 @@ class TreeNode{
     }
 };
 
-
 class Solution{
-    public:
-    vector<vector<int>> levelOrder(TreeNode * root){
-        vector<vector<int>> ans;
-        if(root == NULL) return ans;
-        queue<TreeNode *> q;
-        q.push(root);
-        while(!q.empty()){
-            int size = q.size();
-            vector<int> level;
-            for(int i = 0; i<size;i++){
-                TreeNode * node = q.front();
-                q.pop();
-                if(node-> left !=NULL) q.push(node-> left);
-                if(node->right != NULL) q.push(node->right);
-                level.push_back(node->data);
-            }
-            ans.push_back(level);
+    public: 
+    vector<int> preOrder(TreeNode * root){
+        vector<int> preorder;
+        if(root == NULL) return preorder;
+        stack<TreeNode *> st;
+        st.push(root);
+        while(!st.empty()){
+            TreeNode * node = st.top();
+            st.pop();
+            preorder.push_back(node->data);
+            if(root->right != NULL) st.push(root->right);
+            if(root->left != NULL) st.push(root->left);
         }
-        return ans;
+        return preorder;
     }
 };
 
@@ -62,11 +53,9 @@ int main(){
     root-> right->left->right = new TreeNode(21);   
     root-> right-> right->left = new TreeNode(22);
     root-> right-> right->left = new TreeNode(23);
-    vector<vector<int>> level = sl.levelOrder(root);
+    vector<int> level = sl.preOrder(root);
     for(int i = 0; i< level.size();i++){
-        for(int j = 0; j < level[i].size(); j++){
-            cout<< level[i][j] << " ";
-        }
-        cout<<endl;
+            cout<< level[i] << " ";
     }
+            cout<<endl;
     return 0;}
