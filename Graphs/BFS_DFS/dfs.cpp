@@ -3,7 +3,7 @@
 
 class Solution{
     private:
-    void dfs(int node, vector<int> adj[],vector<int> visited,vector<int>& ls){
+    void dfs(int node, vector<int> adj[],vector<int>& visited,vector<int>& ls){
         visited[node] = 1;
         ls.push_back(node);
         for(auto it: adj[node]){
